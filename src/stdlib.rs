@@ -21,11 +21,15 @@ impl StdLib {
     pub const TABLE: StdLib = StdLib(1 << 1);
 
     /// [`io`](https://www.lua.org/manual/5.4/manual.html#6.8) library
-    #[cfg(not(feature = "luau"))]
-    #[cfg_attr(docsrs, doc(cfg(not(feature = "luau"))))]
+    #[cfg(not(any(feature = "luau", feature = "lua52-factorio")))]
+    #[cfg_attr(
+        docsrs,
+        doc(cfg(not(any(feature = "luau", feature = "lua52-factorio"))))
+    )]
     pub const IO: StdLib = StdLib(1 << 2);
 
     /// [`os`](https://www.lua.org/manual/5.4/manual.html#6.9) library
+    #[cfg(not(feature = "lua52-factorio"))]
     pub const OS: StdLib = StdLib(1 << 3);
 
     /// [`string`](https://www.lua.org/manual/5.4/manual.html#6.4) library
@@ -40,7 +44,13 @@ impl StdLib {
     /// [`bit`](https://www.lua.org/manual/5.2/manual.html#6.7) library
     ///
     /// Requires `feature = "lua52/luajit/luau"`
-    #[cfg(any(feature = "lua52", feature = "luajit", feature = "luau", doc))]
+    #[cfg(any(
+        feature = "lua52-factorio",
+        feature = "lua52",
+        feature = "luajit",
+        feature = "luau",
+        doc
+    ))]
     pub const BIT: StdLib = StdLib(1 << 6);
 
     /// [`math`](https://www.lua.org/manual/5.4/manual.html#6.7) library

@@ -37,6 +37,9 @@
           "llvm-tools-preview"
         ])
         rust-analyzer-nightly
+
+        clang
+        pkg-config
       ];
     };
   };

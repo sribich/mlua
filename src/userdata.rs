@@ -107,6 +107,7 @@ pub enum MetaMethod {
     #[cfg(any(
         feature = "lua54",
         feature = "lua53",
+        feature = "lua52-factorio",
         feature = "lua52",
         feature = "luajit52",
     ))]
@@ -118,8 +119,16 @@ pub enum MetaMethod {
     /// Requires `feature = "lua52"`
     ///
     /// [`ipairs`]: https://www.lua.org/manual/5.2/manual.html#pdf-ipairs
-    #[cfg(any(feature = "lua52", feature = "luajit52", doc))]
-    #[cfg_attr(docsrs, doc(cfg(any(feature = "lua52", feature = "luajit52"))))]
+    #[cfg(any(
+        feature = "lua52-factorio",
+        feature = "lua52",
+        feature = "luajit52",
+        doc
+    ))]
+    #[cfg_attr(
+        docsrs,
+        doc(cfg(any(feature = "lua52-factorio", feature = "lua52", feature = "luajit52")))
+    )]
     IPairs,
     /// The `__iter` metamethod.
     ///
@@ -208,11 +217,12 @@ impl MetaMethod {
             #[cfg(any(
                 feature = "lua54",
                 feature = "lua53",
+                feature = "lua52-factorio",
                 feature = "lua52",
                 feature = "luajit52"
             ))]
             MetaMethod::Pairs => "__pairs",
-            #[cfg(any(feature = "lua52", feature = "luajit52"))]
+            #[cfg(any(feature = "lua52-factorio", feature = "lua52", feature = "luajit52"))]
             MetaMethod::IPairs => "__ipairs",
             #[cfg(feature = "luau")]
             MetaMethod::Iter => "__iter",

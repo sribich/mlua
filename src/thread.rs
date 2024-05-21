@@ -137,6 +137,7 @@ impl<'lua> Thread<'lua> {
     /// # Ok(())
     /// # }
     /// ```
+    #[cfg(any(not(feature = "lua52-factorio"), doc))]
     pub fn resume<A, R>(&self, args: A) -> Result<R>
     where
         A: IntoLuaMulti<'lua>,
@@ -160,6 +161,7 @@ impl<'lua> Thread<'lua> {
     /// Resumes execution of this thread.
     ///
     /// It's similar to `resume()` but leaves `nresults` values on the thread stack.
+    #[cfg(any(not(feature = "lua52-factorio"), doc))]
     unsafe fn resume_inner<A: IntoLuaMulti<'lua>>(&self, args: A) -> Result<c_int> {
         let lua = self.0.lua;
         let state = lua.state();
@@ -194,6 +196,7 @@ impl<'lua> Thread<'lua> {
     }
 
     /// Gets the status of the thread.
+    #[cfg(not(feature = "lua52-factorio"))]
     pub fn status(&self) -> ThreadStatus {
         let thread_state = self.state();
         unsafe {

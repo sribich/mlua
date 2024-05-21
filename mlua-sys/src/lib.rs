@@ -7,6 +7,9 @@
 
 use std::os::raw::c_int;
 
+#[cfg(feature = "lua-factorio")]
+extern crate link_cplusplus;
+
 #[cfg(any(feature = "lua54", doc))]
 pub use lua54::*;
 
@@ -16,13 +19,21 @@ pub use lua53::*;
 #[cfg(any(feature = "lua52", doc))]
 pub use lua52::*;
 
+#[cfg(any(feature = "lua52-factorio", doc))]
+pub use lua52_factorio::*;
+
 #[cfg(any(feature = "lua51", feature = "luajit", doc))]
 pub use lua51::*;
 
 #[cfg(any(feature = "luau", doc))]
 pub use luau::*;
 
-#[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+#[cfg(any(
+    feature = "lua54",
+    feature = "lua53",
+    feature = "lua52-factorio",
+    feature = "lua52"
+))]
 #[doc(hidden)]
 pub const LUA_MAX_UPVALUES: c_int = 255;
 
@@ -87,6 +98,9 @@ pub mod lua54;
 #[cfg(any(feature = "lua53", doc))]
 #[cfg_attr(docsrs, doc(cfg(feature = "lua53")))]
 pub mod lua53;
+
+#[cfg(feature = "lua52-factorio")]
+pub mod lua52_factorio;
 
 #[cfg(any(feature = "lua52", doc))]
 #[cfg_attr(docsrs, doc(cfg(feature = "lua52")))]

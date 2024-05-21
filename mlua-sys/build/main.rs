@@ -1,15 +1,17 @@
 cfg_if::cfg_if! {
-    if #[cfg(all(feature = "lua54", not(any(feature = "lua53", feature = "lua52", feature = "lua51", feature = "luajit", feature = "luau"))))] {
+    if #[cfg(all(feature = "lua54", not(any(feature = "lua53", feature = "lua52-factorio", feature = "lua52", feature = "lua51", feature = "luajit", feature = "luau"))))] {
         include!("main_inner.rs");
-    } else if #[cfg(all(feature = "lua53", not(any(feature = "lua54", feature = "lua52", feature = "lua51", feature = "luajit", feature = "luau"))))] {
+    } else if #[cfg(all(feature = "lua53", not(any(feature = "lua54", feature = "lua52-factorio", feature = "lua52", feature = "lua51", feature = "luajit", feature = "luau"))))] {
         include!("main_inner.rs");
-    } else if #[cfg(all(feature = "lua52", not(any(feature = "lua54", feature = "lua53", feature = "lua51", feature = "luajit", feature = "luau"))))] {
+    } else if #[cfg(all(feature = "lua52-factorio", not(any(feature = "lua54", feature = "lua53", feature = "lua52", feature = "lua51", feature = "luajit", feature = "luau"))))] {
         include!("main_inner.rs");
-    } else if #[cfg(all(feature = "lua51", not(any(feature = "lua54", feature = "lua53", feature = "lua52", feature = "luajit", feature = "luau"))))] {
+    } else if #[cfg(all(feature = "lua52", not(any(feature = "lua54", feature = "lua53", feature = "lua52-factorio", feature = "lua51", feature = "luajit", feature = "luau"))))] {
         include!("main_inner.rs");
-    } else if #[cfg(all(feature = "luajit", not(any(feature = "lua54", feature = "lua53", feature = "lua52", feature = "lua51", feature = "luau"))))] {
+    } else if #[cfg(all(feature = "lua51", not(any(feature = "lua54", feature = "lua53", feature = "lua52-factorio", feature = "lua52", feature = "luajit", feature = "luau"))))] {
         include!("main_inner.rs");
-    } else if #[cfg(all(feature = "luau", not(any(feature = "lua54", feature = "lua53", feature = "lua52", feature = "lua51", feature = "luajit"))))] {
+    } else if #[cfg(all(feature = "luajit", not(any(feature = "lua54", feature = "lua53", feature = "lua52-factorio", feature = "lua52", feature = "lua51", feature = "luau"))))] {
+        include!("main_inner.rs");
+    } else if #[cfg(all(feature = "luau", not(any(feature = "lua54", feature = "lua53", feature = "lua52-factorio", feature = "lua52", feature = "lua51", feature = "luajit"))))] {
         include!("main_inner.rs");
     } else {
         fn main() {

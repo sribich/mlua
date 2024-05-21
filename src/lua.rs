@@ -413,7 +413,7 @@ impl Lua {
                 (|| -> Result<()> {
                     let _sg = StackGuard::new(state);
 
-                    #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+                    #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52-factorio", feature = "lua52"))]
                     ffi::lua_rawgeti(state, ffi::LUA_REGISTRYINDEX, ffi::LUA_RIDX_GLOBALS);
                     #[cfg(any(feature = "lua51", feature = "luajit", feature = "luau"))]
                     ffi::lua_pushvalue(state, ffi::LUA_GLOBALSINDEX);
@@ -1119,6 +1119,7 @@ impl Lua {
     #[cfg(any(
         feature = "lua54",
         feature = "lua53",
+        feature = "lua52-factorio",
         feature = "lua52",
         feature = "luau"
     ))]
@@ -1205,6 +1206,7 @@ impl Lua {
 
         #[cfg(any(
             feature = "lua53",
+            feature = "lua52-factorio",
             feature = "lua52",
             feature = "lua51",
             feature = "luajit",
@@ -1352,7 +1354,7 @@ impl Lua {
                 ffi::LUA_OK => {
                     if let Some(env) = env {
                         self.push_ref(&env.0);
-                        #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+                        #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52-factorio", feature = "lua52"))]
                         ffi::lua_setupvalue(state, -2, 1);
                         #[cfg(any(feature = "lua51", feature = "luajit", feature = "luau"))]
                         ffi::lua_setfenv(state, -2);
@@ -1866,7 +1868,7 @@ impl Lua {
         unsafe {
             let _sg = StackGuard::new(state);
             assert_stack(state, 1);
-            #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+            #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52-factorio", feature = "lua52"))]
             ffi::lua_rawgeti(state, ffi::LUA_REGISTRYINDEX, ffi::LUA_RIDX_GLOBALS);
             #[cfg(any(feature = "lua51", feature = "luajit", feature = "luau"))]
             ffi::lua_pushvalue(state, ffi::LUA_GLOBALSINDEX);
@@ -2962,6 +2964,7 @@ impl Lua {
         #[cfg(any(
             feature = "lua54",
             feature = "lua53",
+            feature = "lua52-factorio",
             feature = "lua52",
             feature = "luau"
         ))]
@@ -3210,7 +3213,7 @@ impl Lua {
             })?,
         )?;
 
-        #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+        #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52-factorio", feature = "lua52"))]
         let searchers: Table = package.get("searchers")?;
         #[cfg(any(feature = "lua51", feature = "luajit"))]
         let searchers: Table = package.get("loaders")?;
@@ -3541,12 +3544,13 @@ unsafe fn load_from_std_lib(state: *mut ffi::lua_State, libs: StdLib) -> Result<
         ffi::lua_pop(state, 1);
     }
 
-    #[cfg(not(feature = "luau"))]
+    #[cfg(not(any(feature = "luau", feature = "lua52-factorio")))]
     if libs.contains(StdLib::IO) {
         requiref(state, ffi::LUA_IOLIBNAME, ffi::luaopen_io, 1)?;
         ffi::lua_pop(state, 1);
     }
 
+    #[cfg(not(feature = "lua52-factorio"))]
     if libs.contains(StdLib::OS) {
         requiref(state, ffi::LUA_OSLIBNAME, ffi::luaopen_os, 1)?;
         ffi::lua_pop(state, 1);
@@ -3565,7 +3569,7 @@ unsafe fn load_from_std_lib(state: *mut ffi::lua_State, libs: StdLib) -> Result<
         }
     }
 
-    #[cfg(any(feature = "lua52", feature = "luau"))]
+    #[cfg(any(feature = "lua52-factorio", feature = "lua52", feature = "luau"))]
     {
         if libs.contains(StdLib::BIT) {
             requiref(state, ffi::LUA_BITLIBNAME, ffi::luaopen_bit32, 1)?;
