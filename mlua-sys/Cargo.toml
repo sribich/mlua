@@ -34,7 +34,7 @@ vendored = ["factorio-lua-src", "luajit-src"]
 module = []
 
 [dependencies]
-link-cplusplus = { version = "1.0.9", optional = true, features = ["libstdc++"] }
+link-cplusplus = { version = "1.0.9", optional = true }
 
 [build-dependencies]
 cc = "1.0"
