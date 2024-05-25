@@ -3596,9 +3596,11 @@ unsafe fn load_from_std_lib(state: *mut ffi::lua_State, libs: StdLib) -> Result<
         ffi::lua_pop(state, 1);
     }
 
-    #[cfg(not(feature = "lua52-factorio"))]
     if libs.contains(StdLib::DEBUG) {
+        #[cfg(not(feature = "lua52-factorio"))]
         requiref(state, ffi::LUA_DBLIBNAME, ffi::luaopen_debug, 1)?;
+        #[cfg(feature = "lua52-factorio")]
+        requiref(state, ffi::LUA_DBLIBNAME, ffi::luaopen_fulldebug, 1)?;
         ffi::lua_pop(state, 1);
     }
 
