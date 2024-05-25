@@ -369,7 +369,7 @@ impl Lua {
             ffi::luaL_loadstring as _,
             ffi::luaL_openlibs as _,
         ]);
-        #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+        #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52", feature = "lua52-factorio"))]
         {
             _symbols.push(ffi::lua_getglobal as _);
             _symbols.push(ffi::lua_setglobal as _);
@@ -2410,6 +2410,7 @@ impl Lua {
             }
 
             #[cfg(any(
+                feature = "lua52-factorio",
                 feature = "lua52",
                 feature = "lua51",
                 feature = "luajit",
@@ -2667,7 +2668,7 @@ impl Lua {
         #[cfg(any(feature = "lua51", feature = "luajit", feature = "luau"))]
         ffi::lua_xpush(self.ref_thread(), state, ExtraData::ERROR_TRACEBACK_IDX);
         // Lua 5.2+ support light C functions that does not require extra allocations
-        #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52"))]
+        #[cfg(any(feature = "lua54", feature = "lua53", feature = "lua52", feature = "lua52-factorio"))]
         ffi::lua_pushcfunction(state, error_traceback);
     }
 
