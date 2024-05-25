@@ -2508,6 +2508,7 @@ impl Lua {
             }
 
             #[cfg(any(
+                feature = "lua52-factorio",
                 feature = "lua52",
                 feature = "lua51",
                 feature = "luajit",
