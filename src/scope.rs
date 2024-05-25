@@ -260,12 +260,8 @@ impl<'lua, 'scope> Scope<'lua, 'scope> {
                 ffi::lua_pushnil(state);
                 ffi::lua_setiuservalue(state, -2, i as _);
             }
-            #[cfg(any(
-                feature = "lua53",
-                feature = "lua52-factorio",
-                feature = "lua52",
-                feature = "luau"
-            ))]
+            // TODO: lua52-factorio
+            #[cfg(any(feature = "lua53", feature = "lua52", feature = "luau"))]
             {
                 ffi::lua_pushnil(state);
                 ffi::lua_setuservalue(state, -2);
